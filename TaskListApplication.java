@@ -3,16 +3,22 @@ import java.util.Scanner;
 
 public class TaskListApplication {
     private ArrayList<String> taskList;
+    private Scanner scanner;
 
     public TaskListApplication() {
         this.taskList = new ArrayList<>();
+        this.scanner = new Scanner(System.in);
     }
 
+    // Step 1: Initialization
+
+    // Method to add a task to the task list
     public void addTask(String task) {
         taskList.add(task);
         System.out.println("Task added: " + task);
     }
 
+    // Method to remove a task from the task list
     public void removeTask(int index) {
         if (index >= 0 && index < taskList.size()) {
             String removedTask = taskList.remove(index);
@@ -22,6 +28,7 @@ public class TaskListApplication {
         }
     }
 
+    // Method to list all tasks in the task list
     public void listTasks() {
         if (taskList.isEmpty()) {
             System.out.println("No tasks available.");
@@ -33,10 +40,10 @@ public class TaskListApplication {
         }
     }
 
-    public static void main(String[] args) {
-        TaskListApplication taskListApp = new TaskListApplication();
-        Scanner scanner = new Scanner(System.in);
+    // Step 2: User Interface
 
+    // Method to display menu options and handle user input
+    public void displayMenu() {
         while (true) {
             System.out.println("\nTask List Application Menu:");
             System.out.println("1. Add Task");
@@ -52,26 +59,31 @@ public class TaskListApplication {
                 case 1:
                     System.out.print("Enter task to add: ");
                     String newTask = scanner.nextLine();
-                    taskListApp.addTask(newTask);
+                    addTask(newTask);
                     break;
 
                 case 2:
                     System.out.print("Enter task index to remove: ");
                     int removeIndex = scanner.nextInt();
-                    taskListApp.removeTask(removeIndex - 1); // Adjust index for user readability
+                    removeTask(removeIndex - 1); // Adjust index for user readability
                     break;
 
                 case 3:
-                    taskListApp.listTasks();
+                    listTasks();
                     break;
 
                 case 4:
                     System.out.println("Exiting Task List Application. Goodbye!");
-                    System.exit(0);
+                    return;
 
                 default:
                     System.out.println("Invalid choice. Please enter a number between 1 and 4.");
             }
         }
+    }
+
+    public static void main(String[] args) {
+        TaskListApplication taskListApp = new TaskListApplication();
+        taskListApp.displayMenu();
     }
 }
